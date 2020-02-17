@@ -51,16 +51,7 @@ int main() {
     cout << endl;
     
     cout << "The total number of 1\'s is: " << countAllOnes<< endl;
-    
-    
-    for (int x = 0; x < ROWS; x++) {
-        for (int y = 0; y < COLUMNS; y++) {
-            if (matrix[x][y] == 1) {
-                countOnesByRow += 1;
-            }
-        }
-       
-    }
+
     cout << "Most ones in a row: " << mostOnes << endl;
     
     cout << "Row: " << rowX + 1 << " is the first row that has the most 1s.\n";
