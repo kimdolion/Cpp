@@ -12,7 +12,7 @@ const int MIN_VALUE = 0;
 const int MAX_VALUE = 1;
 
 int main() {
-    int count = 0;
+    int countAllOnes = 0;
     unsigned seed = time(0);
     srand(seed);
     cout << "Random 0's and 1's in a 5 by 5 matrix.\n\n";
@@ -24,18 +24,39 @@ int main() {
     for (int x = 0; x < ROWS; x++) {
         cout << "Row: " << x + 1 << "|";
         for (int y = 0; y < COLUMNS; y++) {
+            // use rand to pick 0 or 1
             int randomLimit = (rand() % (MAX_VALUE - MIN_VALUE + 1)) + MIN_VALUE;
+            // set the index to 0 or 1
             matrix[x][y] = randomLimit;
+            // show the matrix by row of 5
             cout << setw(5) << matrix[x][y];
+            // count how many 1s were created
             if (matrix[x][y] == 1) {
-                count += 1;
+                countAllOnes += 1;
             }
         }
+        // space each row
         cout << endl;
     }
     cout << endl;
-
-    cout << "The total number of 1\'s is: " << count << endl;
-    // cout << "Row: " << rowX << "\tColumn: "<< columnY << " has the most 1s.\n";
+    
+    cout << "The total number of 1\'s is: " << countAllOnes<< endl;
+    
+    int countOnesByRow = 0, mostOnes = 0, rowX = 0;
+    for (int x = 0; x < ROWS; x++) {
+        for (int y = 0; y < COLUMNS; y++) {
+            if (matrix[x][y] == 1) {
+                countOnesByRow += 1;
+            }
+        }
+        mostOnes = countOnesByRow;
+        if (mostOnes > countOnesByRow) {
+            rowX = x;
+        }
+        countOnesByRow = 0;
+    }
+    cout << "Ones by Row: " << mostOnes << endl;
+    
+    cout << "Row: " << rowX + 1 << " has the most 1s.\n";
     return 0;
 }
