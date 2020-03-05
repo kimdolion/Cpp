@@ -15,6 +15,8 @@ public:
 	~Rectangle();
 };
 Rectangle::Rectangle() {
+	length = 1;
+	width = 10;
 	cout << "This is a rectangle constructor" << endl;
 }
 Rectangle::~Rectangle() {
@@ -62,7 +64,10 @@ int main() {
 	secondRect.setWidth(secondWidth);
 	cout << "Your rectangle has a length of " << secondRect.getLength() << " and a width of " << secondRect.getWidth() << endl;
 	secondArea = secondRect.area();
-	cout << "The area of your rectangle is " << secondArea << endl;
-
+	cout << "The area of your rectangle is " << secondArea << endl << endl;
+	
+	Rectangle thirdRect;
+	cout << "Your rectangle has a length of " << thirdRect.getLength() << " and a width of " << thirdRect.getWidth() << endl;
+	
 	return 0;
 }
