@@ -21,15 +21,21 @@ int main() {
     cout << "You can enter between 2 and 4 numbers into this LCM calculator.\n"
         << "Enter how many numbers you want to use for this LCM calculator: ";
     cin >> sizeOfArray;
+    // a while loop for input validation if user inputs numbers outside the given range.
+    // user will be directed to enter a number in the range until they comply.
     while (sizeOfArray < 2 || sizeOfArray > 4) {
         cout << "You must enter an integer between 2 and 4.\n";
         cin >> sizeOfArray;
     }
+    // once user has complied with first set of directions
+    // then the program will be ready to take in values between 2 and 100 for an array.
     if (sizeOfArray > 1 && sizeOfArray < 5) {
-        int values[sizeOfArray];
+        int values[sizeOfArray]; // initialize array with the size given from the user.
+        // prepare the array for the actual user values
         for (int i = 0; i < sizeOfArray; i++) {
             cout << "Now enter values between 2 and 100 for number " << i << ": ";
             cin >> userValue;
+            // if the value is within the range then add it to the array.
             if (userValue > 1 && userValue < 101) {
                 values[i] = userValue;
             }
