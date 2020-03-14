@@ -28,13 +28,14 @@ int main() {
     if (sizeOfArray > 1 && sizeOfArray < 5) {
         int values[sizeOfArray];
         for (int i = 0; i < sizeOfArray; i++) {
-            cout << "Enter values between 2 and 100: ";
+            cout << "Now enter values between 2 and 100 for number " << i << ": ";
             cin >> userValue;
             if (userValue > 1 && userValue < 101) {
                 values[i] = userValue;
             }
             else {
-                cout << "Invalid input.\n";
+                cout << "You must enter values between 2 and 100.\n";
+                i-= 1;
             }
         }
         cout << endl;
