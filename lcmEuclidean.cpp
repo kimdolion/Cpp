@@ -48,7 +48,7 @@ int main() {
                 i-= 1; // reduce the iterator by 1 because of bad input
             }
         }
-        cout << "\n\nYou entered: ";
+        cout << "\nYou entered: ";
         displayArray(values, sizeOfArray);
         result = leastCommonMultiple(values, sizeOfArray);
         cout << "Least common multiple of all numbers in the array is: " << result;
@@ -59,7 +59,7 @@ int main() {
 
 void displayArray(int arr[], int size) {
     for (int i = 0; i < size; i++) {
-        cout << "In the array at position " << i << ": " << arr[i] << endl;
+        cout << arr[i] << "  ";
     }
 }
 
