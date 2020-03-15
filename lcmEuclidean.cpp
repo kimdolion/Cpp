@@ -62,28 +62,25 @@ void displayArray(int arr[], int size) {
         cout << "In the array at position " << i << ": " << arr[i] << endl;
     }
 }
-/*
+
 int greatestCommonDenom(int a, int b) { // find the greatest common denominator between 2 numbers
     int remain, temp1 = a, temp2 = b;
-    // find the remainder of two variables
+    // find the remainder of two variables as long as it doesnt equal 0
     while ((a % b) > 0)  {
         remain = a % b; // find the remainder of these two numbers
         a = b; // set a to b for the next iteration
         b = remain; // set b to the remainder for the next iteration until we have a remainder of 0
     }
-    cout << "GCD of " << temp1 << " and " << temp2 " is " << b << endl;
+    cout << "GCD of " << temp1 << " and " << temp2 << " is " << b << endl;
     return b;
 }
 
 int leastCommonMultiple(int arr[], int size) {
-    // LCM(x,y)=(x*y)/GCD(x,y) equation for calculating the least common multiple using greatest common denominator
-    int gcd, lcm, x, y;
-    for (int i = 0; i < size; i++) {
-        
+    // LCM(x,y)=(x*y)/GCD(x,y) 
+    // equation for calculating the least common multiple using greatest common denominator
+    int lcm = arr[0]; // initialize lcm as the first arr value
+    for (int i = 1; i < size; i++) { // for loop to go through every array value
+        lcm = (arr[i] * lcm) / (greatestCommonDenom(arr[i], lcm)); // set lcm to the value of each array element / gcd
     }
-    gcd = greatestCommonDenom(x, y);
-    lcm = (x * y) / gcd;
-    cout << "Least common multiple is: " << lcm;
-    return lcm;
+    return lcm; // return the lcm when all gcds are checked
 }
-*/
