@@ -7,21 +7,22 @@
 #include <fstream>
 using namespace std;
 
-int menu(int);
+void menu();
 void showMenu();
+void showRecords();
 int main()
 {
-    int userChoice;
     //bool keepLooping = true;
     cout << "Welcome to the Employee Management System.\n" << "Here are the menu options:\n";
     showMenu();
-    cin >> userChoice;
-    menu(userChoice);
+    menu();
     return 0;
 }
 
 
-int menu(int userChoice) {
+void menu() {
+    int userChoice;
+    cin >> userChoice;
     switch(userChoice) {
         case 1:
             cout << "You selected: 1. List by Hire Date.\n";
@@ -86,16 +87,15 @@ int menu(int userChoice) {
             /*
             If the user selects 9, the program displays all the records in the text file.
             */
+            showRecords();
             break;
         case 10:
             cout << "You selected: 10. Exit.\nGoodbye!";
             break;
         default:
-            cout << "You entered an invalid choice. Pick from the menu.\n";
-            int userChoice;
+            cout << "You entered an invalid choice. Pick from the menu.\n\n";
             showMenu();
-            cin >> userChoice;
-            menu(userChoice);
+            menu();
             break;
     }
 }
@@ -106,3 +106,16 @@ void showMenu() {
         <<  "8. Write total payroll of company\n" << "9. Display all records\n" << "10. Exit\n";
     cout << "Enter a menu option: ";
 };
+
+void showRecords() {
+    string line;
+    ifstream myfile ("example.txt");
+    if (myfile.is_open()) {
+        while (getline (myfile, line))
+        {
+          cout << line << '\n';
+        }
+        myfile.close();
+    }
+    else cout << "Unable to open file.\n";
+}
