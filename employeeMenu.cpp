@@ -10,7 +10,7 @@
 #include <string>
 using namespace std;
 
-const int NUM_RECORDS = 20, NUM_COL = 10;
+const int NUM_RECORDS = 20;
 const int NAME_SIZE = 51, DATE_SIZE = 10, NUM_SIZE = 14, ADDRESS_SIZE = 51;
 /*
 struct Employee_name {
@@ -23,7 +23,7 @@ struct Employee_address {
 };
 */
 struct Employee_record {
-    char idNumber[NUM_SIZE] = {0};
+    char idNumber[NUM_SIZE] = { 0 };
     char employeeName[NAME_SIZE] = "";
     char birthDate[DATE_SIZE] = "";
     char employeeAddress1[ADDRESS_SIZE] = "";
@@ -33,15 +33,15 @@ struct Employee_record {
     char department[NAME_SIZE] = "";
     char hireDate[DATE_SIZE] = "";
     char employeeSalary[NUM_SIZE] = { 0 };
-} employees[NUM_RECORDS][NUM_COL];
+} employee_arr[NUM_RECORDS];
 
 void menu(Employee_record &);
 void showMenu();
-void showRecords(Employee_record);
 void addRecord(Employee_record &);
 //void deleteRecord(Employee_record&);
 void editMobile(Employee_record&);
 void editSalary(Employee_record&);
+void showRecords(Employee_record employee);
 
 int main() {
     Employee_record employee;
@@ -58,7 +58,7 @@ void menu(Employee_record &employee) {
     cin >> userChoice;
     while (cin.bad() || userChoice < 1 || userChoice > 10)
     {
-        cout << "\t- Invalid Option. Enter your choice again: ";
+        cout << "\tInvalid Option. Enter your choice again: ";
         cin.clear();
         cin.ignore(1000, '\n');
         cin >> userChoice;
@@ -70,49 +70,77 @@ void menu(Employee_record &employee) {
         the program need to sorting (use bubble sort) the records in the text file by hire date and then display the entire data set.
         Be sure that the entire data is written in an organized and readable format.
         */
+        cout << endl;
+        showMenu();
+        menu(employee);
         break;
     case 2:
         cout << "You selected: 2. Add a new record.\n";
+        cin.clear();
+        cin.ignore(1000, '\n');
         /*
         If the user selects 2, the program adds new employee details in the text file.
         */
         addRecord(employee);
+        cout << endl;
         showMenu();
         menu(employee);
         break;
     case 3:
         cout << "You selected: 3. Delete a record.\n";
+        cin.clear();
+        cin.ignore(1000, '\n');
         /*
         If the user selects 3, the program deletes a record by employee id.
         If a wrong employee id is provided, the program reports it.
         */
         //deleteRecord(employee);
+        cout << endl;
+        showMenu();
+        menu(employee);
         break;
     case 4:
         cout << "You selected: 4. Search employee mobile number.\n";
+        cin.clear();
+        cin.ignore(1000, '\n');
         /*
         If the user selects 4, the program searches (use linear search) an employee mobile number by employee’s birth date
             and display mobile number with employee id and name.
         If a wrong employee’s birth date is provided, the program reports it.
         */
+        cout << endl;
+        showMenu();
+        menu(employee);
         break;
     case 5:
         cout << "You selected: 5. Find employees hired for longer than 5 years.\n";
+        cin.clear();
+        cin.ignore(1000, '\n');
         /*
         If the user selects 5, the program finds how many employees have been with the company for more than 5 years and display their names.
         */
+        cout << endl;
+        showMenu();
+        menu(employee);
         break;
     case 6:
         cout << "You selected: 6. Update telephone number\n";
+        cin.clear();
+        cin.ignore(1000, '\n');
         /*
         If the user selects 6, the program updates telephone number of the employee by employee name in the text file.
         After performing the file update, the program should report the updated telephone number.
         If a wrong name is provided, the program reports this and doesn’t make any changes.
         */
         editMobile(employee);
+        cout << endl;
+        showMenu();
+        menu(employee);
         break;
     case 7:
         cout << "You selected: 7. Update salary.\n";
+        cin.clear();
+        cin.ignore(1000, '\n');
         /*
         If the user selects 7, the program updates salary of the  employee in the text file based on the given condition
                 (if the employee has less than 5 years experience, increment salary by 2000,
@@ -121,58 +149,47 @@ void menu(Employee_record &employee) {
             After performing the file update, the program should report the updated salary.
         */
         editSalary(employee);
+        cout << endl;
+        showMenu();
+        menu(employee);
         break;
     case 8:
         cout << "You selected: 8. Write total payroll of company.\n";
+        cin.clear();
+        cin.ignore(1000, '\n');
         /*
         If the user selects 8, the program calculates the sum of the salaries paid by the company per month and per year and display them.
         */
+        showMenu();
+        menu(employee);
         break;
     case 9:
         cout << "You selected: 9. Display all records.\n";
+        cin.clear();
+        cin.ignore(1000, '\n');
         /*
         If the user selects 9, the program displays all the records in the text file.
         */
         showRecords(employee);
+        cout << endl;
         showMenu();
         menu(employee);
         break;
     case 10:
         cout << "You selected: 10. Exit.\nGoodbye!\n";
+        cin.clear();
+        cin.ignore(1000, '\n');
         break;
     }
 }
 
 void showMenu() {
+    cout << "\t\tMenu" << "\n----------------------------------------\n";
     cout << "1. List by hire date\n" << "2. Add new record\n" << "3. Delete a record\n" << "4. Search employee mobile number\n"
         << "5. Find employees hired for longer than 5 years\n" << "6. Update telephone number\n" << "7. Update salary\n"
         << "8. Total payroll of company\n" << "9. Display all records\n" << "10. Exit\n";
     cout << "Enter a menu option: ";
 };
-
-void showRecords(Employee_record employee) {
-    char next;
-    fstream employeeFile("employee.txt", ios::in | ios::binary);
-    if (employeeFile.is_open()) {
-        employeeFile.read(reinterpret_cast<char*>(&employee), sizeof(employee));
-        while (!employeeFile.eof()) {
-            cout << "Employee ID: " << employee.idNumber << endl;
-            cout << "Employee Name: " << employee.employeeName << endl;
-            cout << "Employee Birth Date: " << employee.birthDate << endl;
-            cout << "Employee Address Line 1: " << employee.employeeAddress1 << endl;
-            cout << "Employee Address Line 2: " << employee.employeeAddress2 << endl;
-            cout << "Employee Mobile Number: " << employee.mobileNumber << endl;
-            cout << "Employee Email ID: " << employee.emailID << endl;
-            cout << "Employee Department: " << employee.department << endl;
-            cout << "Employee Hire Date: " << employee.hireDate << endl;
-            cout << "Employee Salary: " << employee.employeeSalary << endl << endl;
-            employeeFile.read(reinterpret_cast<char *>(&employee), sizeof(employee));
-        }
-        cout << "\nEnd of records.\n";
-        employeeFile.close();
-    }
-    else cout << "Unable to open file.\n";
-}
 
 void addRecord(Employee_record &employee) {
     cout << "\nEnter employee details:\n";
@@ -229,7 +246,7 @@ void editMobile(Employee_record &employee) {
     cout << "\nEmployee ID: " << employee.idNumber << endl;
     cout << "Employee Mobile Number: " << employee.mobileNumber << endl;
     
-    cout << "\tEmployee Mobile Number: ";
+    cout << "\tNew Mobile Number: ";
     cin.getline(employee.mobileNumber, NUM_SIZE);
     employeeFile.write(reinterpret_cast<char*>(&employee), sizeof(employee));
     cout << "Employee mobile number is: " << employee.mobileNumber;
@@ -240,4 +257,30 @@ void editMobile(Employee_record &employee) {
 
 void editSalary(Employee_record& employee) {
     cout << "Employee salary is: " << employee.employeeSalary;
+}
+
+void showRecords(Employee_record employee) {
+    fstream employeeFile("employee.txt", ios::in | ios::binary);
+    if (employeeFile.is_open()) {
+        employeeFile.read(reinterpret_cast<char*>(&employee), sizeof(employee));
+        //for (int row = 0; row < NUM_RECORDS; row++) {
+            while (!employeeFile.eof()) {
+                cout << "Employee ID: " << employee.idNumber << endl;
+                cout << "Employee Name: " << employee.employeeName << endl;
+                cout << "Employee Birth Date: " << employee.birthDate << endl;
+                cout << "Employee Address Line 1: " << employee.employeeAddress1 << endl;
+                cout << "Employee Address Line 2: " << employee.employeeAddress2 << endl;
+                cout << "Employee Mobile Number: " << employee.mobileNumber << endl;
+                cout << "Employee Email ID: " << employee.emailID << endl;
+                cout << "Employee Department: " << employee.department << endl;
+                cout << "Employee Hire Date: " << employee.hireDate << endl;
+                cout << "Employee Salary: " << employee.employeeSalary << endl;
+                cout << "____________________________\n";
+                employeeFile.read(reinterpret_cast<char*>(&employee), sizeof(employee));
+            }
+        //}
+        cout << "\nEnd of records.\n";
+        employeeFile.close();
+    }
+    else cout << "Unable to open file.\n";
 }
