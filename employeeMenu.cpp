@@ -13,8 +13,33 @@ const int NUM_RECORDS = 3;
 const int NAME_SIZE = 51, DATE_SIZE = 10, NUM_SIZE = 14, ADDRESS_SIZE = 51;
 
 /*
-
-char idNumber[NUM_SIZE];
+// primitive data types for testing
+    int idNumber;
+    string employeeName;
+    Date birthDate;
+    string employeeAddress1;
+    string employeeAddress2;
+    int mobileNumber;
+    string emailID;
+    string department;
+    Date hireDate;
+    double employeeSalary;
+    
+    char[arr] for actual structures since structures don't like strings
+    struct Employee_record {
+    int idNumber;
+    char employeeName[NAME_SIZE];
+    Date birthDate;
+    char employeeAddress1[ADDRESS_SIZE];
+    char employeeAddress2[ADDRESS_SIZE];
+    char mobileNumber[NUM_SIZE];
+    char emailID[NAME_SIZE];
+    char department[NAME_SIZE];
+    Date hireDate;
+    double employeeSalary;
+};
+    
+    char idNumber[NUM_SIZE];
     char employeeName[NAME_SIZE];
     char birthDate[DATE_SIZE];
     char employeeAddress1[ADDRESS_SIZE];
