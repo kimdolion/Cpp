@@ -84,6 +84,7 @@ void addRecord(Employee_record [], int); // option 2
 void deleteRecord(Employee_record [], int); // option 3
 int searchForId(Employee_record [], int, int); //helper for option 3
 void writeToFile(Employee_record [], int); // helper
+void readFromFile();
 void getMobileNumber(Employee_record employee_arr[NUM_RECORDS]); // option 4
 int searchForBirthDate(Employee_record [], int, int, int, int); // helper for option 4
 void find5YearStaff(Employee_record [], int); // option 5
@@ -205,7 +206,7 @@ int main()
             After performing the file update, the program should report the updated telephone number.
             If a wrong name is provided, the program reports this and doesn’t make any changes.
             */
-            //editMobile(employee);
+            editMobileNumber(employee_arr, NUM_RECORDS);
             cout << endl;
             break;
         case 7:
@@ -243,15 +244,7 @@ int main()
             If the user selects 9, the program displays all the records in the text file.
             */
             //showRecords(employee);
-            {
-                fstream employeeFile("employee.txt", ios::out);
-                string line;
-                if (employeeFile.is_open()) {
-                    while (employeeFile >> line) {
-                        cout << line << endl;
-                    }
-                }
-            }
+            readFromFile();
             cout << endl;
             break;
         case 10:
@@ -264,19 +257,37 @@ int main()
     return 0;
 }
 
+void readFromFile()
+{
+    fstream employeeFile("employee.txt", ios::in);
+    char ch;
+    if (employeeFile.is_open()) {
+        employeeFile.get(ch);
+        while (employeeFile) {
+            cout << ch;
+            employeeFile.get(ch);
+        }
+        cout << "\nEnd of File Records.\n";
+        employeeFile.close();
+    }
+    else {
+        cout << "Error opening file.\n";
+    }
+}
+
 void writeToFile(Employee_record arr[], int size) {
     fstream employeeFile("employee.txt", ios::out);
     if (employeeFile.is_open()) {
-        employeeFile << "Employee ID\tEmployee Name\t Employee Birth Date\tEmployee Address Line 1\tEmployee Address Line 2"
-            <<"\tEmployee Mobile Number\tEmployee Email ID\tEmployee Department\tEmployee Hire Date\tEmployee Salary\n";
+        //employeeFile << "ID\tName\tBirth Date\tAddress Line 1\tAddress Line 2"
+           // <<"\tMobile Number\tEmail ID\tDepartment\tHire Date\tSalary\n";
         for (int row = 0; row < size; row++) {
             employeeFile
-                << arr[row].idNumber << " " << arr[row].employeeName << " "
-                << arr[row].birthDate.month << "/" << arr[row].birthDate.day << "/" << arr[row].birthDate.year << " "
-                << arr[row].employeeAddress1 << " " << arr[row].employeeAddress2 << " "
-                << arr[row].mobileNumber << " " << arr[row].emailID << " " << arr[row].department << " "
-                << arr[row].hireDate.month << "/" << arr[row].hireDate.day << "/" << arr[row].hireDate.year << " "
-                << arr[row].employeeSalary << endl;
+                << arr[row].idNumber << " \t" << arr[row].employeeName << " \t"
+                << arr[row].birthDate.month << "/" << arr[row].birthDate.day << "/" << arr[row].birthDate.year << " \t"
+                << arr[row].employeeAddress1 << " \t" << arr[row].employeeAddress2 << " \t"
+                << arr[row].mobileNumber << " \t" << arr[row].emailID << " " << arr[row].department << " \t"
+                << arr[row].hireDate.month << "/" << arr[row].hireDate.day << "/" << arr[row].hireDate.year << " \t"
+                << fixed << setprecision(2) << arr[row].employeeSalary << endl;
         }
         employeeFile.close();
     }
@@ -423,12 +434,12 @@ void getMobileNumber(Employee_record employee_arr[NUM_RECORDS]) { //option 4
     cout << "\tEnter the year: ";
     cin >> userSearchYear;
     result = searchForBirthDate(employee_arr, NUM_RECORDS, userSearchMonth, userSearchDay, userSearchYear);
-    if (result != -1) { // if it exists, return the phone number of the employee.
-        cout << "\n\nSuccess! Found the record.\n" << "\tEmployee "
-            << employee_arr[result].employeeName << "'s Mobile Number is: " << employee_arr[result].mobileNumber;
-    }
-    else { //
+    if (result == -1) { 
         cout << "\n\nThat birth date does not exist in the records.\n";
+    }
+    else { // if it exists, return the phone number of the employee.
+        cout << "\n\nSuccess! Found the record.\n" << "\tEmployee ID: " << employee_arr[result].idNumber << " Name: "
+            << employee_arr[result].employeeName << "'s Mobile Number is: " << employee_arr[result].mobileNumber;
     }
 };
 
@@ -445,8 +456,31 @@ void find5YearStaff(Employee_record arr[], int size) { // option 5
     cout << "\nEnd of senior staff search.\n";
 };
 
-void editMobileNumber(Employee_record arr[], int size) { // option 6
+int searchForEmployeeName(Employee_record arr[], int size, char query[], int querySize) {
+    for (int i = 0; i < size; i++) {
+        if (arr[i].employeeName == query) {
+            return i;
+        }
+        else {
+            return -1;
+        }
+    }
+};
 
+void editMobileNumber(Employee_record arr[], int size) { // option 6
+    char userEmployeeName[NAME_SIZE];
+    int result;
+    cout << "Enter the Employee Name: ";
+    cin.getline(userEmployeeName, NAME_SIZE);
+    result = searchForEmployeeName(arr, size, userEmployeeName, NAME_SIZE);
+    if (result != -1) {
+        cout << "Enter the new Mobile Number: ";
+        cin.getline(arr[result].mobileNumber, NUM_SIZE);
+        writeToFile(arr, NUM_RECORDS);
+    }
+    else {
+        cout << "That Employee does not exist.\nReturning to Main Menu.\n";
+    }
 };
 
 void increaseSalary(Employee_record arr[], int size) { // option 7
@@ -489,8 +523,8 @@ sum of the salaries paid by the company
         totalYear += arr[i].employeeSalary;
         totalMonth += (arr[i].employeeSalary / 12);
     }
-    cout << "Company pays Total Monthly Salary: " << totalMonth << endl;
-    cout << "Company pays Total Yearly Salary: " << totalYear << endl;
+    cout << "\nTotal MONTHLY Salary Paid: " << totalMonth << endl;
+    cout << "Total YEARLY Salary Paid: " << totalYear << endl;
 };
 void readFromFile(Employee_record emp) {
     fstream employeeFile("employee.txt", ios::out);
