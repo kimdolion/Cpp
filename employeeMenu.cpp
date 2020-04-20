@@ -70,7 +70,7 @@ struct Employee_record {
     double employeeSalary;
 };
 
-struct Employee_record employee = { 0, "Kim Wilkes", 8,8,1991, "11 Cranston", "Jamaica Plain", "1234567890", "k@k.com", "Software Engineering", 4,12,2020, 54000 };
+struct Employee_record employee = { 0, "Kim Wilkes", 8,8,1991, "123 Test", "Boston", "1234567890", "k@k.com", "Software Engineering", 4,12,2020, 54000 };
 struct Employee_record employee_arr[NUM_RECORDS] = {
 { 0, "Kim Wilkes", 8,8,1991, "11 Cranston", "Jamaica Plain", "1234567890", "k@k.com", "Software Engineering", 4,12,2020, 54000 },
 { 1, "Kim Wilkes", 8,8,1991, "11 Cranston", "Jamaica Plain", "1234567890", "k@k.com", "Software Engineering", 4,12,2020, 54000 },
